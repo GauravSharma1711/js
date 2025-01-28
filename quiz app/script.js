@@ -64,10 +64,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 
      const resultcontainer = document.getElementById('result-container');
      const yourscore = document.getElementById('your-score');
+     const yourtotal = document.getElementById('your-total');
      const restartbtn = document.getElementById('restart-btn');
 
 let currentquestionidx =0;
 let score = 0 ;
+let total  =0 ;
 
 
     startbtn.addEventListener('click', startquiz);
@@ -82,6 +84,7 @@ let score = 0 ;
     restartbtn.addEventListener('click',()=>{
         currentquestionidx=0;
         score =0;
+        total=0;
         resultcontainer.classList.add('hidden');
         startquiz();
     });
@@ -116,9 +119,11 @@ choiceslist.appendChild(li);
 const correctans = questions[currentquestionidx].answer;
 if(correctans==choice.textContent){
     score++;
+    total+=10;
   choice.style.backgroundColor="green"
 }else{
     choice.style.backgroundColor="red"
+    total-=5;
 }
 nextbtn.classList.remove('hidden')
       }
@@ -128,6 +133,7 @@ nextbtn.classList.remove('hidden')
         questioncontainer.classList.add('hidden');
         resultcontainer.classList.remove('hidden');
         yourscore.textContent=`${score} out if ${questions.length}`;
+        yourtotal.textContent =`${total} out if ${(questions.length)*10}`;
         
       }
 
