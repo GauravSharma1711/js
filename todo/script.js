@@ -1,63 +1,75 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded',()=>{
+
     const input = document.getElementById('todo-input');
     const btn = document.getElementById('add-task-btn');
     const list = document.getElementById('todo-list');
 
-    let taskarr = JSON.parse(localStorage.getItem('tasks')) || [];
+    let taskarr =  JSON.parse(localStorage.getItem('tasks')) || [];
 
-    // Render tasks on page load
-    taskarr.forEach((e) => {
-        renderTask(e);
-    });
+    taskarr.forEach((e)=>{
+        rendertask(e);
+    })
 
-    btn.addEventListener('click', function () {
-        if (input.value.trim() !== '') {
-            const text = input.value.trim();
+    btn.addEventListener('click',addtask)
 
-            const newTask = {
-                id: Date.now(),
-                text: text,
-                completed: false,
-            };
 
-            taskarr.push(newTask);
-            saveTasks();
-            renderTask(newTask);
-            input.value = '';
-        }
-    });
+    function addtask(){
+        
+     let taskname = input.value.trim();
 
-    function saveTasks() {
+         if(taskname.length>0){
+                const taskobj = {
+                    name:taskname,
+                    completed:false,
+                    id:Date.now()
+                }
+            
+               
+
+
+                taskarr.push(taskobj);
+              savetask();
+    rendertask(taskobj);
+    input.value = "";
+            }else{
+                alert("Please enter a task");
+            }
+        
+    }
+
+    function rendertask(e){
+        
+            let li = document.createElement('li');
+            let span = document.createElement('span');
+            let button = document.createElement('button');
+
+            span.textContent=e.name;
+            span.style.textDecoration = e.completed ? 'line-through' : 'none';
+            button.textContent="Delete";
+            li.appendChild(span);
+            li.appendChild(button);
+            list.appendChild(li);
+
+            li.addEventListener('click',()=>{
+      e.completed=!e.completed;
+span.style.textDecoration = e.completed?'line-through':'none'
+                           savetask();
+            })
+
+            button.addEventListener('click',()=>{
+                list.removeChild(li);
+             taskarr =   taskarr.filter((t)=> t.id!==e.id );
+                savetask()
+            })
+            
+       
+    }
+
+    function savetask(){
         localStorage.setItem('tasks', JSON.stringify(taskarr));
     }
 
-    function renderTask(e) {
-        const task = document.createElement('li');
 
-let tasktext = document.createElement('span');
-tasktext.textContent  =e.text;
-tasktext.style.textDecoration = e.completed ? 'line-through' : 'none';
 
-        let button = document.createElement('button');
-        button.textContent = 'Delete';
 
-        task.appendChild(tasktext);
-        task.appendChild(button);
-        list.appendChild(task);
-
-        // Add hover effect
-        task.addEventListener('click', function () {
-           e.completed = !e.completed;
-           tasktext.style.textDecoration = e.completed?'line-through':'none'
-           saveTasks();
-        });
-
-       
-        // Delete functionality
-        button.addEventListener('click', function () {
-            list.removeChild(task);
-            taskarr = taskarr.filter((t) => t.id !== e.id);
-            saveTasks();
-        });
-    }
-});
+})
