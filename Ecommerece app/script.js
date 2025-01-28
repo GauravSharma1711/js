@@ -67,7 +67,6 @@ cart.forEach((item,index)=>{
 }
 
 checkoutbtn.addEventListener('click',()=>{
-  
       cart.length = 0;
    alert("checked out successfully")
    rendercart();
