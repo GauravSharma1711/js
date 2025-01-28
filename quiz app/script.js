@@ -64,77 +64,75 @@ document.addEventListener('DOMContentLoaded',()=>{
 
      const resultcontainer = document.getElementById('result-container');
      const yourscore = document.getElementById('your-score');
-     const yourtotal = document.getElementById('your-total');
+    
      const restartbtn = document.getElementById('restart-btn');
 
-let currentquestionidx =0;
-let score = 0 ;
-let total  =0 ;
 
+let curidx = 0 ;
+let score =0
 
-    startbtn.addEventListener('click', startquiz);
-    nextbtn.addEventListener('click',()=>{
-        currentquestionidx++;
-        if(currentquestionidx<questions.length){
-            showquestions();
-        }else{
-            showresult();
-        }
-    })
-    restartbtn.addEventListener('click',()=>{
-        currentquestionidx=0;
-        score =0;
-        total=0;
-        resultcontainer.classList.add('hidden');
-        startquiz();
-    });
-
-
-      function startquiz(){
-        startbtn.classList.add('hidden')
-        resultcontainer.classList.add('hidden');
-        questioncontainer.classList.remove('hidden');
-
-        showquestions();
-      }
-      function showquestions(){
-           nextbtn.classList.add('hidden');
-           questiontext.textContent = questions[currentquestionidx].question;
-
-           choiceslist.innerHTML=""// clear previous choices
-
-
-           questions[currentquestionidx].choices.forEach(choice=>{
-const li = document.createElement('li');
-li.textContent = choice;
-li.addEventListener('click',()=>selectans(li));
-choiceslist.appendChild(li);
- 
+startbtn.addEventListener('click',startquiz);
+nextbtn.addEventListener('click',()=>{
+  curidx++;
+  if(curidx<questions.length){
+    showquestion();
+  }else{
+    showresult();
+  }
 })
 
+restartbtn.addEventListener('click',()=>{
+  score=0;
+  curidx=0;
+  resultcontainer.classList.add('hidden');
+  questioncontainer.classList.add('hidden');
+  startquiz();
+
+})
       
-      }
+function startquiz(){
+  startbtn.classList.add('hidden');
+  resultcontainer.classList.add('hidden')
+questioncontainer.classList.remove('hidden');
+showquestion();
 
-      function selectans(choice){
-const correctans = questions[currentquestionidx].answer;
-if(correctans==choice.textContent){
-    score++;
-    total+=10;
-  choice.style.backgroundColor="green"
-}else{
-    choice.style.backgroundColor="red"
-    total-=5;
 }
-nextbtn.classList.remove('hidden')
-      }
 
+function showquestion(){
+  nextbtn.classList.add('hidden');
+  questiontext.textContent = questions[curidx].question;
+  choiceslist.innerHTML="";
+  questions[curidx].choices.forEach(choice=>{
+    const li = document.createElement('li');
+    li.textContent=choice;
+    choiceslist.appendChild(li);
+    li.addEventListener('click',()=>selectans(li));
+  })
+ 
+function selectans(li){
+    if(li.textContent===questions[curidx].answer){
+             li.style.backgroundColor="green";
+             score++;
+             nextbtn.classList.remove('hidden');
+    }else{
+      li.style.backgroundColor="red";
+      nextbtn.classList.remove('hidden');
+    }
+}
+  
+  
+}
 
-      function showresult(){
-        questioncontainer.classList.add('hidden');
-        resultcontainer.classList.remove('hidden');
-        yourscore.textContent=`${score} out if ${questions.length}`;
-        yourtotal.textContent =`${total} out if ${(questions.length)*10}`;
-        
-      }
+function showresult(){
+questioncontainer.classList.add('hidden');
+resultcontainer.classList.remove('hidden');
+yourscore.textContent=`${score} out of ${questions.length}`
+}
 
+  
+  
 })
+
+
+
+  
