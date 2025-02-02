@@ -1,0 +1,74 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    color: white;
+    background-color: black;
+}
+.nav{
+    background-color: rgb(32, 32, 138);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 38px;
+    position: relative;
+    
+}
+.main{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.options{
+  
+   padding: 24px 44px;
+   display: flex;
+   justify-content: space-between;
+}
+.options button{
+    padding: 50px 50px;
+    border: none;
+    font-weight: 600;
+    font-size: 23px;
+    background-color: beige;
+    border-radius: 50%;
+    margin: 23px;
+}
+
+.score{
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-;
+    margin: 18px;
+    padding: 33px;
+}
+.score div{
+    margin: 12px;
+    font-weight: 700;
+    font-size: 23px;
+}
+.no{
+   
+    padding: 16px 16px;
+   line-height: 23px;
+  text-align: center;
+}
+.message{
+   position: absolute;
+   left: 40%;
+   top: 80%;
+   border-radius: 24px;
+   padding: 24px 74px;
+   background-color: rgb(8, 8, 91);
+}
